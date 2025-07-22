@@ -1,0 +1,7 @@
+[
+  {
+    "slot": "SYSTEM_HOME_PAGE",
+    "componentName": "link-button",
+    "url": "./main.js"
+  }
+]
