@@ -3,7 +3,7 @@
     "slot": "HOME_MENU",
     "title": "My Custom Link",
     "componentName": "link-button",
-    "url": "./main.js",
+    "url": "./link_button.js",
     "params": {
       "buttonText": "Go to Google",
       "link": "https://www.google.com"
@@ -13,7 +13,7 @@
     "slot": "SYSTEM_HOME_PAGE",
     "title": "Visit Our Docs",
     "componentName": "link-button",
-    "url": "./main.js",
+    "url": "./link_button.js",
     "params": {
       "buttonText": "Documentation",
       "link": "https://docs.example.com"
