@@ -3,6 +3,6 @@
     "slot": "SYSTEM_HOME_PAGE",
     "title": "Blog de Historia de Salud Integrada - La Rioja",
     "componentName": "link-button",
-    "url": "./main.js"
+    "url": "https://cdn.jsdelivr.net/gh/Historia-Clinica-La-Rioja/misc-extensions@main/link-button-hardcoded/main.js"
   }
 ]
