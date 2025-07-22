@@ -102,6 +102,7 @@
                     const paramsAttribute = JSON.parse(this.getAttribute('params') || '{}');
                     console.debug('LinkButton attributeChangedCallback', paramsAttribute);
                     // Render the component with the new parameters.
+                    // Pass the parsed paramsAttribute directly to render.
                     this.render(paramsAttribute);
                 } catch (e) {
                     console.error('Error parsing params attribute for LinkButton:', e);
@@ -111,18 +112,18 @@
 
         /**
          * Renders or re-renders the component based on the provided parameters.
-         * @param {object} params - An object containing the component's parameters.
-         * @param {object} params.defParams - An object holding the actual button text and link.
-         * @param {string} params.defParams.buttonText - The text to display on the button.
-         * @param {string} params.defParams.link - The URL the button should navigate to.
+         * @param {object} params - An object containing the component's parameters,
+         * directly including buttonText and link.
+         * @param {string} params.buttonText - The text to display on the button.
+         * @param {string} params.link - The URL the button should navigate to.
          */
-        render({ defParams }) {
+        render(params) { // Changed parameter from { defParams } to params
             // Clear existing shadow DOM content to prevent duplicates on re-render.
             this.shadowRoot.innerHTML = '';
 
-            // Get button text and link from defParams, with fallback defaults.
-            const buttonText = defParams?.buttonText || 'Click Me';
-            const targetUrl = defParams?.link || '#'; // Default to current page if no link is provided.
+            // Get button text and link directly from the params object.
+            const buttonText = params?.buttonText || 'Click Me';
+            const targetUrl = params?.link || '#'; // Default to current page if no link is provided.
 
             console.debug(`LinkButton rendering with text: "${buttonText}" and link: "${targetUrl}"`);
 
