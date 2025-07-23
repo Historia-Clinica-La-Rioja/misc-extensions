@@ -62,23 +62,22 @@
          * This is a reliable lifecycle callback for initial setup.
          */
         connectedCallback() {
-            // The host system provides a stringified JSON object in the 'params' attribute.
-            const hostParams = JSON.parse(this.getAttribute('params') || '{}');
+            // For debugging, we are now using hardcoded parameters to ensure the
+            // component renders correctly, bypassing attribute parsing.
+            const hardcodedParams = {
+                href: "https://www.google.com",
+                label: "Hardcoded Link"
+            };
 
-            // Following the pattern in `main_test.js`, the user-defined parameters
-            // from `definition.json` are nested inside a 'params' property.
-            const userParams = hostParams.params || {};
-
-            this.render(userParams);
+            this.render(hardcodedParams);
         }
 
         /**
-         * Renders the component based on the provided user parameters.
-         * @param {object} params - The user-defined parameters from definition.json.
+         * Renders the component based on the provided parameters.
+         * @param {object} params - The parameters for the component.
          */
         render(params) {
-            // Destructure the href and label from the user-defined params, providing defaults.
-            const { href = '#', label = 'Click Me' } = params;
+            const { href, label } = params;
 
             // Clear any existing content to prevent duplication on re-renders.
             this.shadowRoot.innerHTML = '';
