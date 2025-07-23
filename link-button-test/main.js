@@ -57,35 +57,30 @@
             this.attachShadow({ mode: 'open' });
         }
 
-        // Observe the 'params' attribute for changes.
-        static get observedAttributes() {
-            return ['params'];
-        }
-
         /**
-         * Called when an observed attribute has been added, removed, or changed.
-         * @param {string} name - The name of the attribute that changed.
-         * @param {string} oldValue - The previous value of the attribute.
-         * @param {string} newValue - The new value of the attribute.
+         * Called when the element is added to the document's DOM.
+         * This is a reliable lifecycle callback for initial setup.
          */
-        attributeChangedCallback(name, oldValue, newValue) {
-            if (name === 'params' && oldValue !== newValue) {
-                // Parse the parameters and re-render the component.
-                const params = JSON.parse(newValue || '{}');
-                this.render(params);
-            }
+        connectedCallback() {
+            // The host system provides a stringified JSON object in the 'params' attribute.
+            const hostParams = JSON.parse(this.getAttribute('params') || '{}');
+
+            // Following the pattern in `main_test.js`, the user-defined parameters
+            // from `definition.json` are nested inside a 'params' property.
+            const userParams = hostParams.params || {};
+
+            this.render(userParams);
         }
 
         /**
-         * Renders the component based on the provided parameters.
-         * @param {object} params - The parameters for the component.
+         * Renders the component based on the provided user parameters.
+         * @param {object} params - The user-defined parameters from definition.json.
          */
         render(params) {
-            // Extract parameters from the 'params' object passed by the system.
-            // The 'defParams' property contains the values from the definition.json.
-            const { href = '#', label = 'Click Me' } = params.defParams || {};
+            // Destructure the href and label from the user-defined params, providing defaults.
+            const { href = '#', label = 'Click Me' } = params;
 
-            // Clear any existing content in the shadow DOM.
+            // Clear any existing content to prevent duplication on re-renders.
             this.shadowRoot.innerHTML = '';
 
             // Create and append the new template.
