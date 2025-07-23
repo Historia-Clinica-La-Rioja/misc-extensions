@@ -65,8 +65,8 @@
             // For debugging, we are now using hardcoded parameters to ensure the
             // component renders correctly, bypassing attribute parsing.
             const hardcodedParams = {
-                href: "https://www.google.com",
-                label: "Hardcoded Link"
+                href: "https://blog-hsi.nubecenter.com.ar/",
+                label: "Blog de Historia de Salud Integrada"
             };
 
             this.render(hardcodedParams);
