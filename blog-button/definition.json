@@ -1,7 +1,7 @@
 [
   {
     "slot": "SYSTEM_HOME_PAGE",
-    "title": "Blog de Historia de Salud Integrada - La Rioja",
+    "title": "Novedades y actualizaciones",
     "componentName": "link-button-widget",
     "url": "./main.js"
   }

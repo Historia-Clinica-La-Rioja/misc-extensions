@@ -1,32 +1,31 @@
 (function (customElements) {
 
-    // Styles for the link button to make it look modern and clickable.
+    // Styles for the link button to give it an elegant, Metro look.
     const STYLES = `
   <style>
     .link-button {
       display: inline-block;
-      padding: 12px 24px;
+      padding: 12px 28px;
       margin: 8px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      font-size: 16px;
-      font-weight: 600;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 400;
       text-align: center;
       text-decoration: none;
       color: #ffffff;
-      background-color: #007aff;
-      border: none;
-      border-radius: 8px;
+      background-color: #0078D7;
+      border: 2px solid #0078D7;
+      border-radius: 0;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
     }
     .link-button:hover {
-      background-color: #005ecb;
-      transform: translateY(-2px);
+      background-color: #ffffff;
+      color: #0078D7;
     }
     .link-button:active {
-      background-color: #004aaa;
-      transform: translateY(0);
+      background-color: #e6e6e6;
+      color: #0078D7;
     }
   </style>`;
 
@@ -66,7 +65,7 @@
             // component renders correctly, bypassing attribute parsing.
             const hardcodedParams = {
                 href: "https://blog-hsi.nubecenter.com.ar/",
-                label: "Blog de Historia de Salud Integrada"
+                label: "Acceder al blog"
             };
 
             this.render(hardcodedParams);
