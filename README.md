@@ -21,9 +21,19 @@ Each project/module is self contained in it's own folder:
 
 ## Usage
 
-### Currently accessed via jsDelivr via CDN
+### Accessed via jsDelivr CDN
 
-https://cdn.jsdelivr.net/gh/(username)/(repo)@(version)/project-name/file.js)
+https://cdn.jsdelivr.net/gh/username/repo@version/project-name/file.js)
+
+### GitHub Pages
+
+Demos can be viewed at:
+
+https://historia-clinica-la-rioja.github.io/misc-extensions/blog-button/
+
+- Access link template
+
+`https://historia-clinica-la-rioja.github.io/misc-extensions/project-name/`
 
 ---
 
