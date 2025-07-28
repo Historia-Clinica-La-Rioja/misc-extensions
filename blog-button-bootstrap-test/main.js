@@ -19,9 +19,9 @@
     };
 
     /**
-     * Defines the LinkButtonWidget custom element.
+     * Defines the LinkButtonBootstrappedWidget custom element.
      */
-    class LinkButtonWidget extends HTMLElement {
+    class LinkButtonBootstrappedWidget extends HTMLElement {
         constructor() {
             super();
             // Attach a shadow DOM to encapsulate the component's styles and structure.
@@ -60,6 +60,6 @@
     }
 
     // Define the new custom element so it can be used in HTML.
-    customElements.define('link-button-widget', LinkButtonWidget);
+    customElements.define('link-button-bootstrapped', LinkButtonBootstrappedWidget);
 
 })(window.customElements);
