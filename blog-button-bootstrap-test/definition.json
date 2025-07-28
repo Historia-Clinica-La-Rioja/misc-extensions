@@ -1,0 +1,8 @@
+[
+  {
+    "slot": "SYSTEM_HOME_PAGE",
+    "title": "Novedades y actualizaciones",
+    "componentName": "link-button-widget",
+    "url": "./main.js"
+  }
+]
