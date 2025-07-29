@@ -23,7 +23,7 @@ Each project/module is self contained in it's own folder:
 
 ### Accessed via jsDelivr CDN
 
-https://cdn.jsdelivr.net/gh/username/repo@version/project-name/file.js)
+https://cdn.jsdelivr.net/gh/username/repo@version/project-name/file.js
 
 ### GitHub Pages
 
