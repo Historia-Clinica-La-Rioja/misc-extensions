@@ -1,0 +1,95 @@
+.titleHome { 
+    text-align: center;
+    font-size: 2em;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.container {
+    margin: 0 auto;
+    background-color: #F6FAFB;
+    padding: 24px;
+    border-radius: 8px;
+    text-align: justify;
+}
+
+.videoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.textHome {
+    font-size: 1.2em;
+    color: #555;
+    line-height: 1.6;
+    margin-top: 10px;
+    padding: 1%;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.titleFaq {
+    text-align: left;
+    font-size: 1.5em;
+    color: #444;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.titleQuestions {
+    font-weight: bold;
+    color: #333;
+    font-size: 1.3em;
+}
+
+.titleAnswers {
+    font-size: 1.2em;
+    color: #555;
+}
+
+.faqContainer {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    left: 19px;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.footer {
+    background-color: #DD1B30;
+    padding: 70px;
+    color: white;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .footer-logo {
+    height: 60px;
+    object-fit: contain;
+    position: relative;
+    left: 43%;
+  }
+  
+  .footer-version {
+    font-size: 14px;
+  }
+  
+  

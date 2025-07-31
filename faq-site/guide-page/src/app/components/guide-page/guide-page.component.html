@@ -1,0 +1,52 @@
+<section class="container">
+
+  <div class="header">
+
+  <h1 class="titleHome">INTRODUCCION DE USO PARA HISTORIA DE SALUD INTEGRADA (HSI)</h1>
+
+
+  <div class="videoContainer">
+    <iframe width="722" height="406" src="https://www.youtube.com/embed/bN3gl0aoaEY"
+      title="¿Cómo funciona la historia clínica digital?" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+
+  <p class="textHome">
+    La Historia de Salud Integrada (HSI) es una plataforma digital que permite a los profesionales de la salud acceder a
+    la información clínica de los pacientes de manera rápida y segura. Esta herramienta facilita la toma de decisiones
+    médicas, mejora la coordinación entre los diferentes niveles de atención y contribuye a una atención más eficiente y
+    centrada en el paciente.
+  </p>
+
+  <p class="textHome">
+    A continuación, se presentan algunos recursos para ayudar a los usuarios a familiarizarse con el uso de HSI:
+  </p>
+
+  <div class="faqContainer">
+
+    <h2 class="titleFaq">Preguntas frecuentes (FAQ)</h2>
+
+
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let faq of faqList" (opened)="panelOpenState.set(true)"
+        (closed)="panelOpenState.set(false)">
+        <mat-expansion-panel-header class="titleQuestions">
+          <mat-panel-title> {{ faq.question }} </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="titleAnswers">{{ faq.answer }}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+  </div>
+
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-content">
+    <img src="assets/logo-footer.png" alt="Logo" class="footer-logo" />
+    <span class="footer-version">
+    </span>
+  </div>
+</footer>
