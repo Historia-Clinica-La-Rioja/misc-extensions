@@ -1,6 +1,5 @@
 (function (customElements) {
 
-    // Styles for the link button to give it an elegant, Metro look.
     const STYLES = `
   <style>
     .link-button {
@@ -52,7 +51,6 @@
     class LinkButtonWidget extends HTMLElement {
         constructor() {
             super();
-            // Attach a shadow DOM to encapsulate the component's styles and structure.
             this.attachShadow({ mode: 'open' });
         }
 
@@ -61,8 +59,6 @@
          * This is a reliable lifecycle callback for initial setup.
          */
         connectedCallback() {
-            // For debugging, we are now using hardcoded parameters to ensure the
-            // component renders correctly, bypassing attribute parsing.
             const hardcodedParams = {
                 href: "https://blog-hsi.nubecenter.com.ar/",
                 label: "Acceder al blog"
@@ -78,10 +74,8 @@
         render(params) {
             const { href, label } = params;
 
-            // Clear any existing content to prevent duplication on re-renders.
             this.shadowRoot.innerHTML = '';
 
-            // Create and append the new template.
             const template = createTemplate(href, label);
             this.shadowRoot.appendChild(template.content.cloneNode(true));
         }
