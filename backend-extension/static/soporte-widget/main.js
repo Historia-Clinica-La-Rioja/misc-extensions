@@ -30,7 +30,6 @@
             this.attachShadow({ mode: 'open' });
         }
 
-        // Obtiene el JWT activo que HSI guarda en el navegador
         getHsiJwt() {
             const keys = ['token', 'access_token', 'jwt', 'auth_token'];
             for (const k of keys) {
@@ -42,9 +41,7 @@
             return '';
         }
 
-        // Busca el username real en HSI usando la sesión activa del navegador
         async resolveRealUsername(personId, hsiJwt) {
-            // 1. Intento por endpoint /backoffice/users (y variante con /api)
             const userUrls = [
                 `/backoffice/users?page=0&size=25&sort=id,DESC&personId=${personId}`,
                 `/api/backoffice/users?page=0&size=25&sort=id,DESC&personId=${personId}`
@@ -64,7 +61,6 @@
                 } catch (e) {}
             }
 
-            // 2. Intento por /auth/public-user y /public-api/user/info/from-token si hay JWT
             if (hsiJwt) {
                 const tokenUrls = [
                     `/api/auth/public-user?token=${encodeURIComponent(hsiJwt)}`,
@@ -91,7 +87,6 @@
                     } catch (e) {}
                 }
 
-                // 3. Respaldo: leer el username/sub directamente del payload del JWT de HSI
                 try {
                     const parts = hsiJwt.split('.');
                     if (parts.length === 3) {
@@ -122,7 +117,6 @@
                     const hsiJwt = this.getHsiJwt();
                     const realUsername = await this.resolveRealUsername(data.id, hsiJwt);
 
-                    // Armamos el JSON inyectando el username real y el JWT de HSI para Go
                     const payload = {
                         ...data,
                         username: realUsername || data.username || '',
