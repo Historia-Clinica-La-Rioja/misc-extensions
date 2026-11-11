@@ -30,46 +30,74 @@
             this.attachShadow({ mode: 'open' });
         }
 
-        async fetchUsernameFromToken() {
-            const rawToken = localStorage.getItem('token') || sessionStorage.getItem('token') || '';
-            const cleanToken = rawToken.replace(/^Bearer\s+/i, '').replace(/^"|"$/g, '');
-
-            if (!cleanToken) return null;
-
-            const urls = [
-                `/api/public-api/user/info/from-token?user-token=${encodeURIComponent(cleanToken)}`,
-                `/public-api/user/info/from-token?user-token=${encodeURIComponent(cleanToken)}`
-            ];
-
-            for (const url of urls) {
-                try {
-                    const res = await fetch(url, {
-                        method: 'GET',
-                        headers: {
-                            'user-token': cleanToken,
-                            'Accept': 'application/json'
-                        }
-                    });
-                    if (res.ok) {
-                        const data = await res.json();
-                        if (data && data.username) {
-                            return data.username;
-                        }
-                    }
-                } catch (e) {
-            
+        getHsiJwt() {
+            const keys = ['token', 'access_token', 'jwt', 'auth_token'];
+            for (const k of keys) {
+                const val = localStorage.getItem(k) || sessionStorage.getItem(k);
+                if (val) {
+                    return val.replace(/^Bearer\s+/i, '').replace(/^"|"$/g, '').trim();
                 }
             }
+            return '';
+        }
 
-            try {
-                const parts = cleanToken.split('.');
-                if (parts.length === 3) {
-                    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
-                    if (payload.username) return payload.username;
+        async resolveRealUsername(personId, hsiJwt) {
+            const userUrls = [
+                `/backoffice/users?page=0&size=25&sort=id,DESC&personId=${personId}`,
+                `/api/backoffice/users?page=0&size=25&sort=id,DESC&personId=${personId}`
+            ];
+
+            for (const url of userUrls) {
+                try {
+                    const headers = { 'Accept': 'application/json' };
+                    if (hsiJwt) headers['Authorization'] = `Bearer ${hsiJwt}`;
+                    const res = await fetch(url, { headers });
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data && Array.isArray(data.content) && data.content.length > 0 && data.content[0].username) {
+                            return data.content[0].username;
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            if (hsiJwt) {
+                const tokenUrls = [
+                    `/api/auth/public-user?token=${encodeURIComponent(hsiJwt)}`,
+                    `/auth/public-user?token=${encodeURIComponent(hsiJwt)}`,
+                    `/api/public-api/user/info/from-token?user-token=${encodeURIComponent(hsiJwt)}`,
+                    `/public-api/user/info/from-token?user-token=${encodeURIComponent(hsiJwt)}`
+                ];
+
+                for (const url of tokenUrls) {
+                    try {
+                        const res = await fetch(url, {
+                            headers: {
+                                'Accept': 'application/json',
+                                'token': hsiJwt,
+                                'user-token': hsiJwt
+                            }
+                        });
+                        if (res.ok) {
+                            const data = await res.json();
+                            if (data && data.username) {
+                                return data.username;
+                            }
+                        }
+                    } catch (e) {}
                 }
-            } catch (e) {}
 
-            return null;
+                try {
+                    const parts = hsiJwt.split('.');
+                    if (parts.length === 3) {
+                        const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+                        if (payload.username) return payload.username;
+                        if (payload.sub && isNaN(payload.sub)) return payload.sub;
+                    }
+                } catch (e) {}
+            }
+
+            return '';
         }
 
         connectedCallback() {
@@ -82,24 +110,20 @@
                 e.preventDefault();
 
                 try {
-                    const [accountRes, tokenUsername] = await Promise.all([
-                        fetch('/api/account/info'),
-                        this.fetchUsernameFromToken()
-                    ]);
+                    const response = await fetch('/api/account/info');
+                    if (!response.ok) throw new Error("Sin sesión");
+                    const data = await response.json();
 
-                    if (!accountRes.ok) throw new Error("Sin sesión");
-                    const accountData = await accountRes.json();
+                    const hsiJwt = this.getHsiJwt();
+                    const realUsername = await this.resolveRealUsername(data.id, hsiJwt);
 
-                    const realUsername = tokenUsername || accountData.username || accountData.email;
-
-                    const payloadToEncode = {
-                        id: accountData.id,
-                        email: accountData.email,
-                        username: realUsername,
-                        personDto: accountData.personDto
+                    const payload = {
+                        ...data,
+                        username: realUsername || data.username || '',
+                        token: hsiJwt
                     };
 
-                    const jsonStr = JSON.stringify(payloadToEncode);
+                    const jsonStr = JSON.stringify(payload);
                     const utf8Str = unescape(encodeURIComponent(jsonStr));
                     const base64Payload = window.btoa(utf8Str);
 
@@ -108,7 +132,6 @@
 
                     window.open(ssoUrl, '_blank', 'noopener,noreferrer');
                 } catch (err) {
-                    console.error("Error al iniciar SSO:", err);
                     alert("No pudimos detectar tu sesión en HSI. Por favor, volvé a iniciar sesión.");
                 }
             });
